@@ -1,0 +1,53 @@
+Option Explicit
+
+Const URLText As String = "https://cat-fact.herokuapp.com/facts/"
+
+Sub GetCatFacts()
+
+'Send the XML request to the site
+Dim XmLReq As New MSXML2.XMLHTTP60
+XmLReq.Open "GET", URLText, False
+XmLReq.send
+
+If XmLReq.Status <> 200 Then
+    MsgBox "Problem" & vbNewLine & XmLReq.Status & " - " & XmLReq.statusText
+    Exit Sub
+End If
+
+'Array CatsArr will contain the items from the response text. Array makes it easy to iterate through all the downloaded data.
+Dim CatsArr() As String
+CatsArr() = Split(XmLReq.responseText, ",")
+
+Dim i As Integer
+Dim CatsFact As String
+
+'CatFactsCol - Collection which will contain the filtered data, say simply cat facts
+Dim CatFactsCol As New Collection
+
+For i = 0 To UBound(CatsArr)
+    If Len(CatsArr(i)) > 30 Then
+        If Not Left(CatsArr(i), 1) = "\" Then
+            If InStr(CatsArr(i), "/") = 0 Then
+                If Mid(CatsArr(i), 2, 4) = "text" Then
+                    If Right(CatsArr(i), 1) = """" Then
+                        CatsFact = Mid(CatsArr(i), InStr(CatsArr(i), ":") + 2)
+                        CatsFact = Replace(CatsFact, """", " ")
+                        CatsFact = Replace(CatsFact, "\", " ")
+                        CatsFact = Trim(CatsFact)
+                            If Right(CatsFact, 1) <> "?" Then
+                                CatFactsCol.Add CatsFact
+                            End If
+                    End If
+                End If
+            End If
+        End If
+    End If
+
+Next i
+
+Dim CatFact
+For Each CatFact In CatFactsCol
+    Debug.Print CatFact 'here you can choose where you would like to add the facts. For example, into Excel Cells.
+Next CatFact
+
+End Sub

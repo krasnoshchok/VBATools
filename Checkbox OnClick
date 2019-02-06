@@ -1,0 +1,19 @@
+Option Explicit
+
+Sub Checkbox_OnClick()
+'just assign this macro to the checkbox in Excel
+'this is so-to-say customized 'Checkbox_OnClick' event
+
+Dim chk As CheckBox
+Set chk = ActiveSheet.CheckBoxes(Application.Caller)
+
+'clicking on the checkbox returns the username of a person who clicked on it as well as exact date and time
+If chk = 1 Then
+    chk.TopLeftCell.Offset(0, 2).Value = Environ("username") & " " & Date & " " & Time
+Else
+    chk.TopLeftCell.Offset(0, 2).ClearContents
+End If
+    
+Set chk = Nothing
+
+End Sub

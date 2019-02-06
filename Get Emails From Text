@@ -1,5 +1,5 @@
 Option Explicit
-Const RegExpForEmails As String = "([A-Za-z0-9\._]+@.[A-Za-z0-9\._]+\.+[A-Za-z]{2,4})"
+Const RegExpForEmails As String = "([A-Za-z0-9\._]+@.[A-Za-z0-9\._]+\.+[A-Za-z]{2,4})" 'Maybe I've missed something? However, it works for most of the emails.
 
 Public Sub GetEmailsOutOfText(AnyText As String)
 
@@ -19,6 +19,7 @@ For Each Email In EmailsCollection
     Debug.Print Email
 Next Email
 
+Set Email = Nothing
 Set EmailsCollection = Nothing
 Set RegEx = Nothing
     

@@ -32,6 +32,7 @@ For i = 0 To UBound(CatsArr)
                         CatsFact = Trim(CatsFact)
                             If Right(CatsFact, 1) <> "?" Then
                                 CatFactsCol.Add CatsFact
+                            End If
     End If
 
 Next i

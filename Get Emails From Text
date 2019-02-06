@@ -19,7 +19,6 @@ ResultString = ""
 
 For Each Email In EmailsCollection
     Debug.Print Email
-    
 Next Email
 
 Set EmailsCollection = Nothing

@@ -12,10 +12,8 @@ With RegEx
 End With
     
 'All the Emails will be collected in one string - ResultString
-Dim ResultString As String, EmailsCollection As Object, Email As Object
+Dim EmailsCollection As Object, Email As Object
 Set EmailsCollection = RegEx.Execute(AnyText)
-
-ResultString = ""
 
 For Each Email In EmailsCollection
     Debug.Print Email

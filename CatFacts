@@ -25,22 +25,13 @@ Dim CatsFact As String
 Dim CatFactsCol As New Collection
 
 For i = 0 To UBound(CatsArr)
-    If Len(CatsArr(i)) > 30 Then
-        If Not Left(CatsArr(i), 1) = "\" Then
-            If InStr(CatsArr(i), "/") = 0 Then
-                If Mid(CatsArr(i), 2, 4) = "text" Then
-                    If Right(CatsArr(i), 1) = """" Then
+    If Len(CatsArr(i)) > 30 And Not Left(CatsArr(i), 1) = "\" And InStr(CatsArr(i), "/") = 0 And Mid(CatsArr(i), 2, 4) = "text" And Right(CatsArr(i), 1) = """" Then
                         CatsFact = Mid(CatsArr(i), InStr(CatsArr(i), ":") + 2)
                         CatsFact = Replace(CatsFact, """", " ")
                         CatsFact = Replace(CatsFact, "\", " ")
                         CatsFact = Trim(CatsFact)
                             If Right(CatsFact, 1) <> "?" Then
                                 CatFactsCol.Add CatsFact
-                            End If
-                    End If
-                End If
-            End If
-        End If
     End If
 
 Next i

@@ -1,0 +1,37 @@
+Option Explicit
+Const RegExpForEmails As String = "([A-Za-z0-9\._]+@.[A-Za-z0-9\._]+\.+[A-Za-z]{2,4})" 'maybe I missed something? However, my expression works for the most of emails.
+
+Public Sub GetEmailsOutOfText(AnyText As String)
+Dim RegEx As Object
+Set RegEx = New VBScript_RegExp_10.RegExp
+
+With RegEx
+    .Global = True
+    .Pattern = RegExpForEmails
+End With
+    
+'All the Emails will be collected in one string - ResultString
+Dim ResultString As String, EmailsCollection As Object, Email As Object
+Set EmailsCollection = RegEx.Execute(AnyText)
+
+ResultString = ""
+
+For Each Email In EmailsCollection
+    ResultString = ResultString & ";" & Email
+Next Email
+
+'Loop above will cause the string to start from semicolon ';'. Thats why to get rid of it, I used the Mid-Len functions combination
+ResultString = Right(ResultString, Len(ResultString) - 1)
+Dim EmailsArr() As String, i As Integer
+    
+'In order to iterate through Emails the Array EmailsArr is created
+EmailsArr() = Split(ResultString, ";")
+
+For i = LBound(EmailsArr) To UBound(EmailsArr)
+    Debug.Print EmailsArr(i) 'here you can do whatever you like with your emails. For example, add them into Excel Cells
+Next i
+
+Set EmailsCollection = Nothing
+Set RegEx = Nothing
+    
+End Sub
